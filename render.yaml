@@ -1,0 +1,26 @@
+# Render Blueprint: New > Blueprint > connect the GitHub repo
+databases:
+  - name: fxpay-db
+    plan: free
+services:
+  - type: web
+    name: fxpay-api
+    runtime: docker
+    rootDir: backend
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase: { name: fxpay-db, property: connectionString }
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "0"
+    healthCheckPath: /api/health/
+  - type: web
+    name: fxpay-web
+    runtime: docker
+    rootDir: frontend
+    dockerfilePath: ./Dockerfile
+    envVars:
+      # set to the fxpay-api public URL + /api after first deploy, then redeploy
+      - key: VITE_API_URL
+        value: https://fxpay-api.onrender.com/api

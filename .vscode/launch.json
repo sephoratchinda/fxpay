@@ -1,0 +1,4 @@
+{ "version": "0.2.0", "configurations": [
+  { "name": "Django API", "type": "debugpy", "request": "launch", "program": "${workspaceFolder}/backend/manage.py",
+    "args": ["runserver", "8000"], "cwd": "${workspaceFolder}/backend", "django": true }
+]}
